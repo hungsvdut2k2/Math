@@ -38,21 +38,6 @@ int main()
 			usedMatrix[i][j] = eigenVectors(i, j);
 		}
 	}
-	for (int i = 0; i < n; i++)
-	{
-		double minOfColumns = usedMatrix[0][i];
-		for (int j = 1; j < n; j++)
-		{
-			if (usedMatrix[j][i] < minOfColumns)
-			{
-				minOfColumns = usedMatrix[j][i];
-			}
-		}
-		for (int j = 0; j < n; j++)
-		{
-			usedMatrix[j][i] /= minOfColumns;
-		}
-	}
 	displayMatrix(usedMatrix, n);
 	//Step 3 : Calculate Inverse Matrix of Eigen Values Matrix
 	double inverseMatrix[100][100];
