@@ -1,49 +1,88 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 using namespace std;
-double a[3][3];
-void matrixMultiply(double res[100][100])
+void out(double P[][100])
 {
+    for (int i=0;i<3;i++)
+    {
+        for (int j=0;j<3;j++)
+        {
+            cout << setprecision(4) << P[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+void makeIdentity(double A[100][100])
+{
+    for(int i = 0; i < 3; i++)
+    {
+        A[i][i] = 1;
+        for(int j = 0; j < 3; j++)
+        {
+            if(i!=j) 
+                A[i][j] = 0;
+        }
+    }
+}
+void assign(double A[100][100], double B[100][100])
+{
+    for(int i = 0; i < 3; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            B[i][j] = A[i][j];
+        }
+    }
+}
+void matrixMultiply(double A[100][100], double B[100][100])
+{
+    double C[100][100];
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
-            res[i][j] = 0;
+            C[i][j] = 0;
             for(int k = 0; k < 3; k++)
             {
-                res[i][j] += a[i][k] * a[k][j];
+                C[i][j] += A[i][k] * B[k][j];
             }
         }
         
     }
+    assign(C,A);
 }
-void matrixExponent(int power, double res[100][100])
+
+void matrixExponent(double A[100][100], double B[100][100], int n)
 {
-    for (int i = 0; i < power; i++)
+    if(n == 0)
     {
-        matrixMultiply(res);
+        makeIdentity(B);
+        return;
     }
+    if(n == 1)
+    {
+        assign(A,B);
+        return;
+    }
+    matrixExponent(A,B,n/2);
+    matrixMultiply(B,B);
+    if(n % 2 != 0) matrixMultiply(B,A);
 }
 int main()
 {
     int power;
-    double res[100][100];
+    double P[100][100];
     cin >> power;
     ifstream myReadFile("input.txt");
     for(int i = 0; i < 3; i++)
     {
         for(int j = 0; j < 3; j++)
         {
-            myReadFile >> a[i][j];
+            myReadFile >> P[i][j];
         }
     }
-    matrixExponent(power, res);
-    for(int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            cout << res[i][j] << " ";
-        }
-        cout << endl;
-    }
+    double B[100][100];
+    matrixExponent(P, B, power);
+    out(B);
 }

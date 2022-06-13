@@ -28,6 +28,7 @@ double gradientDescent(double startPoint, double learningRate)
         {
             break;
         }
+        cout << i << ": " << points[i] << endl;
     }
     return points[i];
 }
