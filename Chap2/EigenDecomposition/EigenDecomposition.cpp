@@ -30,21 +30,23 @@ int main()
 	
 	cout << "Eigen Vectors: " << endl;
 	MatrixXd eigenVectors = es.pseudoEigenvectors();
-	double usedMatrix[100][100];
+	MatrixXd usedMatrix = eigenVectors.inverse();
+	
+	double usedMatrix1[100][100];
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			usedMatrix[i][j] = eigenVectors(i, j);
+			usedMatrix1[i][j] = eigenVectors(i, j);
 		}
 	}
-	displayMatrix(usedMatrix, n);
+	displayMatrix(usedMatrix1, n);
 	//Step 3 : Calculate Inverse Matrix of Eigen Values Matrix
 	double inverseMatrix[100][100];
 	cout << "Inverse Matrix:" << endl;
-	if (inverse(usedMatrix, inverseMatrix, n))
+	if (inverse(usedMatrix1, inverseMatrix, n))
 	{
-		displayMatrix(inverseMatrix, n);
+		cout << usedMatrix << endl;
 	}
 	
 }

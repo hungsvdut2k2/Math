@@ -11,11 +11,19 @@ int main()
 	int columns;
 	double matrix[100][100];
 	cin >> rows >> columns;
+	MatrixXd A(rows, columns);
 	for (int i = 0; i < rows; i++)
 	{
 		for (int j = 0; j < columns; j++)
 		{
 			cin >> matrix[i][j];
+		}
+	}
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < columns; j++)
+		{
+			A(i, j) = matrix[i][j];
 		}
 	}
 	//SVD can be used for rectangular matrix
@@ -61,9 +69,10 @@ int main()
 		}
 	}
 	double resMatrix2[100][100];
+	MatrixXd usedMatrix2(columns, columns);
 	matrixMultiplication(matrix, usedMatrix, resMatrix2, rows, columns);
 	cout << "A * V: " << endl;
-	displayMatrix(resMatrix2, rows, rows);
+	cout << A * eigenVectors << endl;
 	cout << endl;
 	double sigmaMatrix[100][100];
 	for (int i = 0; i < columns; i++)
@@ -71,6 +80,13 @@ int main()
 		for (int j = 0; j < columns; j++)
 		{
 			sigmaMatrix[i][j] = sqrt(eigenValues(i, j));
+		}
+	}
+	for (int i = 0; i < columns; i++)
+	{
+		for (int j = 0; j < columns; j++)
+		{
+			usedMatrix2(i, j) = sigmaMatrix[i][j];
 		}
 	}
 	cout << "Sigma Matrix: " << endl;
@@ -81,7 +97,7 @@ int main()
 	double finalResMatrix[100][100];
 	matrixMultiplication(resMatrix2, sigmaMatrix, finalResMatrix, rows, rows);
 	cout << "U: " << endl;
-	displayMatrix(finalResMatrix, rows, columns);
+	cout << A * eigenVectors * usedMatrix2.transpose() << endl;
 }
 void displayMatrix(double matrix[100][100], int rows, int columns)
 {

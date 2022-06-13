@@ -30,7 +30,7 @@ double GradientDescentMomentum(double startPoint, double alpha, double beta)
     int i;
     for (i = 1; i < 1000; i++)
     {
-        newDeltaX = deltaX * alpha - derivative(points[i - 1]);
+        newDeltaX = deltaX * alpha - derivative(points[i - 1]) * beta;
         points[i] = points[i - 1] + alpha * newDeltaX - beta * derivative(points[i - 1]);
         deltaX = newDeltaX;
         if (fabs(derivative(points[i])) < pow(10, -3))

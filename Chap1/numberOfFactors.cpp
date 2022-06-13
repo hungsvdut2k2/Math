@@ -3,26 +3,32 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-int numberOfFactors(long number);
+void numberOfFactors(long number);
 int main()
 {
     long number;
     cin >> number;
-    cout << numberOfFactors(number) << endl;
+    numberOfFactors(number);
 }
-int numberOfFactors(long number)
+void numberOfFactors(long number)
 {
     // cách làm là lấy n / các số nguyên tố bắt đầu từ 2
     // nhân số lần chia cho nhau -> kết quả
     long result = 1;
+    int count1 = 0;
     for (int i = 2; i <= number; i++)
     {
         int count = 0;
         bool flag = false;
         if (number % i == 0)
         {
-            cout << "Uoc: " << i << endl;
+            if(count1  > 0)
+            {
+                cout << " * ";
+            }
+            cout << i;
             flag = true;
+            count1++;
         }
         while (number % i == 0)
         {
@@ -31,9 +37,9 @@ int numberOfFactors(long number)
         }
         if (flag == true)
         {
-            cout << "So mu: " << count << endl;
+            cout << " ^ " << count;
         }
         result *= (count + 1);
     }
-    return result;
+    cout << endl << "Number of factor: " << result;
 }
